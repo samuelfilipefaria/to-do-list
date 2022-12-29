@@ -1,5 +1,5 @@
 <template lang="pug">
-div.container.grid-xs.py-2
+div.container.grid-md.py-2
   h1.text-center Todo list vue
   div.add-task-form
     h2 Adicionar tarefa:
@@ -16,41 +16,58 @@ div.container.grid-xs.py-2
           th Tarefa
           th Ações
       tbody
-        tr(v-for="task in todoTasks" :key="task.id")
-          td {{ task.description }}
-          td
-            button.btn.btn-success.mr-2.tooltip(data-tooltip="Marcar tarefa como concluída")
-              i.icon.icon-check
-            button.btn.btn-error.tooltip(data-tooltip="Deletar tarefa")
-              i.icon.icon-delete
-    p.text-center.text-error(v-else) Não há tarefas
+        TaskItem(
+          v-for="t in todoTasks"
+          :key="t.id"
+          :task="t"
+          @toggleTask='toggleTask'
+          @deleteTask='deleteTask'
+        )
+    p.text-error(v-else) Não há tarefas
 </template>
 
 <script>
+import TaskItem from './components/TaskItem';
 
 export default {
   name: 'App',
   components: {
+    TaskItem
   },
   data() {
     return {
       todoTasks: [],
       currentTask: {
-        description: ""
+        description: "",
+        checked: false
       },
     };
   },
   methods: {
     addTask(currentTask) {
-      currentTask.id = Date.now() + Math.floor(Math.random() * 100)
+      currentTask.id = Date.now() + Math.floor(Math.random() * 100);
       this.todoTasks.push(this.currentTask);
-      this.currentTask = { description: "" };
+      this.currentTask = { description: "", checked: false };
+    },
+    findTask(task) {
+      const index = this.todoTasks.findIndex(item => item.id === task.id);
+      return index;
+    },
+    toggleTask(task) {
+      if(this.findTask(task) > -1) {
+        this.todoTasks[this.findTask(task)].checked = !this.todoTasks[this.findTask(task)].checked;
+      }
+    },
+    deleteTask(task) {
+      if(this.findTask(task) > -1) {
+        this.todoTasks.splice(this.findTask(task), 1);
+      }
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .add-task-form, .task-list {
   margin-top: 4rem;
 }
