@@ -1,11 +1,14 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
-
-import router from '../routes/appRoutes.js'
-
+import router from '@/routes/appRoutes'
 import 'spectre.css/dist/spectre.min.css'
 import 'spectre.css/dist/spectre-icons.min.css'
 
+const pinia = createPinia()
 const app = createApp(App)
+
 app.use(router)
+app.use(pinia)
+
 app.mount('#app')
