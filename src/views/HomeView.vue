@@ -8,31 +8,18 @@ div.add-task-form
         i.icon.icon-plus
 div.task-list
   h2 Tarefas:
-  table.table(v-if="taskList.length != 0")
-    thead
-      tr
-        th Tarefa
-        th Ações
-    tbody
-      task-item(
-        v-for="t in taskList"
-        :key="t.id"
-        :task="t"
-        @toggleTask='toggleTask(t)'
-        @deleteTask='deleteTask(t)'
-      )
-  p.text-error(v-else) Não há tarefas
+  task-list(:tasks="taskList")
 </template>
 
 <script>
-import TaskItem from '@/components/TaskItem';
+import TaskList from '@/components/TaskList';
 import { todoListStore } from '@/store';
 import { mapState, mapActions } from 'pinia';
 
 export default {
   name: 'HomeView',
   components: {
-    TaskItem
+    TaskList
   },
   data() {
     return {
@@ -50,7 +37,7 @@ export default {
       this.addTask(task);
       this.currentTask = { description: "", checked: false };
     },
-    ...mapActions(todoListStore, ['addTask', 'toggleTask', 'deleteTask'])
+    ...mapActions(todoListStore, ['addTask'])
   }
 }
 </script>

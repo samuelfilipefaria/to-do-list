@@ -3,7 +3,12 @@ import { defineStore } from 'pinia'
 export const todoListStore = defineStore('todoList', {
   state: () => ({ taskList: [], loading: false }),
   getters: {
-
+    uncheckeds() {
+      return this.taskList.filter(task => task.checked == false);
+    },
+    checkeds() {
+      return this.taskList.filter(task => task.checked == true);
+    }
   },
   actions: {
     findTaskIndex(task) {

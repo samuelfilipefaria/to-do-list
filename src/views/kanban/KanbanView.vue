@@ -1,22 +1,65 @@
 <template lang="pug">
-
+div.container-kanban
+  div.columns
+    div.panel.column.col-5
+      div.panel-header
+        div.panel-title
+          h2 A fazer
+      div.panel-nav
+      div.panel-body
+        task-list(:tasks="uncheckeds")
+      div.panel-footer
+    div.panel.column.col-5
+      div.panel-header
+        div.panel-title
+          h2 Feito
+      div.panel-nav
+      div.panel-body
+        task-list(:tasks="checkeds")
+      div.panel-footer
 </template>
 
 <script>
+import TaskList from '@/components/TaskList';
 import { todoListStore } from '@/store';
-import { storeToRefs } from 'pinia';
+import { mapState } from 'pinia';
 
 export default {
   name: 'KanbanView',
-  setup() {
-    const store = todoListStore()
-    const { taskList } = storeToRefs(store)
-    const { addTask } = store
-
-    return {
-      taskList,
-      addTask
-    }
+  components: {
+    TaskList
   },
+  computed: {
+    ...mapState(todoListStore, ['uncheckeds', 'checkeds'])
+  }
 }
 </script>
+
+<style scoped>
+.container-kanban {
+  margin-top: 30px;
+  height: 80vh;
+  width: 50vw;
+}
+
+.panel {
+  margin-right: 30px;
+  border: none;
+  box-shadow:
+    0px 0px 1.2px rgba(0, 0, 0, 0.013),
+    0px 0px 2.7px rgba(0, 0, 0, 0.019),
+    0px 0px 4.6px rgba(0, 0, 0, 0.023),
+    0px 0px 6.9px rgba(0, 0, 0, 0.027),
+    0px 0px 10px rgba(0, 0, 0, 0.03),
+    0px 0px 14.2px rgba(0, 0, 0, 0.033),
+    0px 0px 20.1px rgba(0, 0, 0, 0.037),
+    0px 0px 29.2px rgba(0, 0, 0, 0.041),
+    0px 0px 45px rgba(0, 0, 0, 0.047),
+    0px 0px 80px rgba(0, 0, 0, 0.06)
+  ;
+}
+
+.columns {
+  height: 100%;
+}
+</style>
