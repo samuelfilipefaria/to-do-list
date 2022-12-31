@@ -36,6 +36,12 @@ export const todoListStore = defineStore('todoList', {
         const index = this.findTaskIndex(task);
         this.taskList.splice(index, 1);
       }
+    },
+    checkAll() {
+      if(this.taskList.length > 0) this.taskList.forEach(task => task.checked = true);
+    },
+    unCheckAll() {
+      if(this.taskList.length > 0) this.taskList.forEach(task => task.checked = false);
     }
   }
 });

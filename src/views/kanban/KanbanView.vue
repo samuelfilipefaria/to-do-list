@@ -8,7 +8,9 @@ div.container-kanban
       div.panel-nav
       div.panel-body
         task-list(:tasks="uncheckeds")
-      div.panel-footer
+      div.panel-footer.text-center
+        button.btn.btn-primary(@click="checkAll") Mover tudo
+          i.icon.icon-forward.ml-2
     div.panel.column.col-5
       div.panel-header
         div.panel-title
@@ -16,13 +18,16 @@ div.container-kanban
       div.panel-nav
       div.panel-body
         task-list(:tasks="checkeds")
-      div.panel-footer
+      div.panel-footer.text-center
+        button.btn.btn-primary(@click="unCheckAll")
+          i.icon.icon-back.mr-2
+          span Mover tudo
 </template>
 
 <script>
 import TaskList from '@/components/TaskList';
 import { todoListStore } from '@/store';
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 
 export default {
   name: 'KanbanView',
@@ -31,6 +36,9 @@ export default {
   },
   computed: {
     ...mapState(todoListStore, ['uncheckeds', 'checkeds'])
+  },
+  methods: {
+    ...mapActions(todoListStore, ['checkAll', 'unCheckAll'])
   }
 }
 </script>
@@ -57,6 +65,10 @@ export default {
     0px 0px 45px rgba(0, 0, 0, 0.047),
     0px 0px 80px rgba(0, 0, 0, 0.06)
   ;
+}
+
+.panel-footer {
+  border-top: solid 2px #5755d9;
 }
 
 .columns {
