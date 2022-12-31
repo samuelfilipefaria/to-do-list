@@ -1,7 +1,7 @@
 <template lang="pug">
 div.add-task-form
   h2 Adicionar tarefa:
-  form(@submit.prevent="createTask(currentTask)")
+  form(@submit.prevent="newTask(currentTask)")
     div.input-group
       input.form-input(type="text" v-model="currentTask.description" placeholder="Item a fazer...")
       button.btn.btn-primary.input-group-btn.tooltip(:class="{loading: loading == true}" data-tooltip="Criar tarefa")
@@ -18,8 +18,8 @@ div.task-list
         v-for="t in taskList"
         :key="t.id"
         :task="t"
-        @toggleTask='toggleTask'
-        @deleteTask='deleteTask'
+        @toggleTask='toggleTask(t)'
+        @deleteTask='deleteTask(t)'
       )
   p.text-error(v-else) Não há tarefas
 </template>
@@ -27,7 +27,7 @@ div.task-list
 <script>
 import TaskItem from '@/components/TaskItem';
 import { todoListStore } from '@/store';
-import { storeToRefs } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 
 export default {
   name: 'HomeView',
@@ -42,40 +42,15 @@ export default {
       },
     };
   },
-  setup() {
-    const store = todoListStore()
-    const { taskList, loading } = storeToRefs(store)
-    const { addTask, invertChecked, removeTaskFromList } = store
-
-    return {
-      taskList,
-      loading,
-      addTask,
-      invertChecked,
-      removeTaskFromList
-    }
+  computed: {
+    ...mapState(todoListStore, ['taskList', 'loading'])
   },
   methods: {
-    async createTask(currentTask) {
-      if(currentTask.description.trim() != "") {
-        this.loading = true;
-        setTimeout(() => {
-          this.addTask(currentTask);
-          this.currentTask = { description: "", checked: false };
-          this.loading = false;
-        }, 400);
-      }
+    newTask(task) {
+      this.addTask(task);
+      this.currentTask = { description: "", checked: false };
     },
-    findTaskIndex(task) {
-      const index = this.taskList.findIndex(item => item.id === task.id);
-      return index;
-    },
-    toggleTask(task) {
-      if(this.findTaskIndex(task) > -1) this.invertChecked(this.findTaskIndex(task));
-    },
-    deleteTask(task) {
-      if(this.findTaskIndex(task) > -1) this.removeTaskFromList(this.findTaskIndex(task));
-    }
+    ...mapActions(todoListStore, ['addTask', 'toggleTask', 'deleteTask'])
   }
 }
 </script>
