@@ -1,27 +1,55 @@
 <template lang="pug">
-div.container-kanban
-  div.columns
-    div.panel.column.col-5
-      div.panel-header
-        div.panel-title
-          h2 A fazer
-      div.panel-nav
-      div.panel-body
-        task-list(:tasks="uncheckeds")
-      div.panel-footer.text-center
-        button.btn.btn-primary(@click="checkAll") Mover tudo
-          i.icon.icon-forward.ml-2
-    div.panel.column.col-5
-      div.panel-header
-        div.panel-title
-          h2 Feito
-      div.panel-nav
-      div.panel-body
-        task-list(:tasks="checkeds")
-      div.panel-footer.text-center
-        button.btn.btn-primary(@click="unCheckAll")
-          i.icon.icon-back.mr-2
-          span Mover tudo
+div.container(style="margin-top: 50px;")
+  div.columns.hide-md
+    div.column.col-6.col-mx-auto
+      div.panel
+        div.panel-header
+          div.panel-title
+            h2 A fazer
+        div.panel-nav
+        div.panel-body
+          task-list(:tasks="uncheckeds")
+        div.panel-footer.text-center
+          button.btn.btn-primary(@click="checkAll") Mover tudo
+            i.icon.icon-forward.ml-2
+    div.column.col-6.col-mx-auto
+      div.panel
+        div.panel-header
+          div.panel-title
+            h2 Feito
+        div.panel-nav
+        div.panel-body
+          task-list(:tasks="checkeds")
+        div.panel-footer.text-center
+          button.btn.btn-primary(@click="unCheckAll")
+            i.icon.icon-back.mr-2
+            span Mover tudo
+
+  div.columns.show-md.mb-2
+    div.column.col-12.col-mx-auto
+      div.panel
+        div.panel-header
+          div.panel-title
+            h2 A fazer
+        div.panel-nav
+        div.panel-body
+          task-list(:tasks="uncheckeds")
+        div.panel-footer.text-center
+          button.btn.btn-primary(@click="checkAll") Mover tudo
+            i.icon.icon-forward.ml-2
+  div.columns.show-md
+    div.column.col-12.col-mx-auto
+      div.panel
+        div.panel-header
+          div.panel-title
+            h2 Feito
+        div.panel-nav
+        div.panel-body
+          task-list(:tasks="checkeds")
+        div.panel-footer.text-center
+          button.btn.btn-primary(@click="unCheckAll")
+            i.icon.icon-back.mr-2
+            span Mover tudo
 </template>
 
 <script>
