@@ -1,24 +1,26 @@
-# todo_list_vue
+# To Do list: a simple todo list made with Vue.js ✅
 
-## Project setup
+![to_do_list](https://github.com/user-attachments/assets/e2cffc6e-e718-4099-bcbc-2f0d00a64543)
+
+# Project setup
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+## Compiles and hot-reloads for development
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+## Compiles and minifies for production
 ```
 yarn build
 ```
 
-### Lints and fixes files
+## Lints and fixes files
 ```
 yarn lint
 ```
 
-### Customize configuration
+## Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
