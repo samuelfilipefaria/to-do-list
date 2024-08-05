@@ -1,4 +1,4 @@
-# To Do list: a simple todo list made with Vue.js ✅
+# To do list: a simple to do list made with Vue.js ✅
 
 ![to_do_list](https://github.com/user-attachments/assets/e2cffc6e-e718-4099-bcbc-2f0d00a64543)
 
